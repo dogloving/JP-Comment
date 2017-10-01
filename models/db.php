@@ -23,6 +23,7 @@
 		$pdo = getHandler();
 		try {
 			// 检查表Site
+			return array(0);
 			$sql = sprintf("SELECT * FROM Site WHERE url = ''", $url);
 			$site = $pdo->query($sql);
 			if($site->rowCount()) {
