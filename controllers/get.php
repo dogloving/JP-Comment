@@ -1,11 +1,10 @@
 <?php 
 	header('Access-Control-Allow-Origin: *');
-	require('../models/db.php');
-	
 	function getInfo($flag, $content) {
 		$info = array('Flag' => $flag, 'Content' => $content);
 		return $info;
 	}
+	require('../models/db.php');
 
 	/**
 	*	根据url获取所有评论
@@ -13,6 +12,8 @@
 	*	@return comments array 该url下的所有评论
 	*/
 	$url = $_POST['url'];
+//echo urldecode(json_encode(getInfo(1,1)));
+//return;
 	$result = get($url);
 	if($result[0] > 0) {
 		echo urldecode(json_encode(getInfo(1, $result[1])));

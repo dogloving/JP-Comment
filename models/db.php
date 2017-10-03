@@ -1,21 +1,22 @@
 <?php 
 	class DB extends SQLite3 {
-      	function __construct() {
-         	$this->open('comments.db');
-      	}
+	      	function __construct() {
+         		$this->open('comments.db');
+      		}
    	}
    	$db = new DB();
    	if(!$db) {
-   		echo '数据库出错';
+  		echo '数据库出错';
    	}
 
    	/**
    	*	在数据库中建表
    	*/
    	function createTable() {
+try {
 $sql =<<<EOF
     CREATE TABLE SITE(
-	URL VARCHAR(200) PRIMARY KEY     NOT NULL,
+	URL VARCHAR(200) PRIMARY KEY NOT NULL,
 	ORIGIN VARCHAR(100) NOT NULL,
 	NUMBER INT NOT NULL);
     CREATE TABLE USER(
@@ -31,13 +32,17 @@ $sql =<<<EOF
 EOF;
 	  	$ret = $db->exec($sql);
 	   	if(!$ret) {
-	    	return true;
+			echo urldecode(json_encode(getInfo(1,$ret->lastErrorMsg())));
 	   	} else {
-	    	return false;
+	    		
 	   	}
-   	}
+} catch(Exception $e) {
+	echo urldecode(json_encode(getInfo(1,$e->getMessage())));
+}
+}
 
-   	createTable();
+   	//createTable();
+
 	/**
 	*	将新评论存入数据库中
 	*	@param nickname string 评论者昵称
@@ -49,10 +54,15 @@ EOF;
 	*/
 	function save($nickname='', $site='', $content='', $origin='', $url='') {
 		// 检查表Site
-		$sql = sprintf("SELECT * FROM SITE WHERE URL = ''", $url);
+//return array(1, $url);
+		$sql = sprintf("SELECT * FROM SITE WHERE URL = '%s'", $url);
+		if(!$db) {
+			$db = new DB();
+		}
 		$site = $db->query($sql);
 		$count = 0;
 		while($row = $site->fetchArray(SQLITE3_ASSOC)) {
+return array(1, $sql);
 			$count++;			
 			$sql = sprintf("UPDATE SITE SET NUMBER = '%d'", $number + 1);
 			$db->query($sql);
@@ -78,7 +88,7 @@ EOF;
 		}
 
 		// 检查Comment
-		$sql = sprintf("INSERT INTO COMMENT VALUES('%s', '%s', '%s', '%s', '%s')", $cid, $url, $uid, $date, $content);
+		$sql = sprintf("INSERT INTO COMMENTS VALUES('%s', '%s', '%s', '%s', '%s')", $cid, $url, $uid, $date, $content);
 		$comment = $db->query($sql);
 		$count = 0;
 		while($row = $comment->fetchArray(SQLITE3_ASSOC)) {
@@ -93,17 +103,19 @@ EOF;
 	*	@return comments array 该url下的所有评论
 	*/
 	function get($url='') {
-		$db = getHandler();
-		return array(0);
 		try {
-			$sql = sprintf("SELECT NICKNAME, HEADICON, DATE, CONTENT FROM COMMENT, USER WHERE COMMENT.USER = USER.UID AND URL = '%s' ORDER BY DATE", $url);
+			$sql = sprintf("SELECT NICKNAME, HEADICON, DATE, CONTENT FROM COMMENTS, USER WHERE COMMENTS.USER = USER.UID AND URL = '%s' ORDER BY DATE", $url);
+			if(!$db) {
+				$db = new DB();
+			}
 			$comment = $db->query($sql);
 			$result = array();
 			while($row = $comment->fetchArray(SQLITE3_ASSOC)) {
+return array(0);
 				$array_push($result, array('nickname' => $row['NICKNAME'], 'headicon' => $row['HEADICON'], 'date' => $row['DATE'], 'content' => $row['CONTENT']));
 			}
 			return array(1, $result);
-		} catch(dbException $e) {
+		} catch(Exception $e) {
 			return array(-1, $e->getMessage());
 		}
 	}

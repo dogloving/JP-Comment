@@ -1,9 +1,9 @@
 <?php 
-	require('../models/db.php');
-
+	header('Access-Control-Allow-Origin: *');
 	function getInfo($flag, $content) {
 		return array('Flag' => $flag, 'Content' => $content);
 	}
+	require('../models/db.php');
 
 	/**
 	*	将新评论存入数据库中
@@ -19,7 +19,6 @@
 	$content = $_POST['content'];
 	$origin = $_POST['origin'];
 	$url = $_POST['url'];
-
 	$result = save($nickname, $site, $content, $origin, $url);
 	if($result[0] > 0) {
 		echo urldecode(json_encode(getInfo(1, $result[1])));
