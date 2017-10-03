@@ -3,7 +3,7 @@
 		$host = 'localhost';
 		$database = 'comments';
 		$username = 'root';
-		$password = 'mysql930';
+		$password = '';
 		$pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pdo->exec('set names "utf8"');
@@ -23,7 +23,6 @@
 		$pdo = getHandler();
 		try {
 			// 检查表Site
-			return array(0);
 			$sql = sprintf("SELECT * FROM Site WHERE url = ''", $url);
 			$site = $pdo->query($sql);
 			if($site->rowCount()) {
@@ -71,6 +70,7 @@
 	*/
 	function get($url='') {
 		$pdo = getHandler();
+		return array(0);
 		try {
 			$sql = sprintf("SELECT nickname, headicon, date, content FROM Comment, User WHERE Comment.user = User.uid AND url = '%s' ORDER BY date", $url);
 			$comment = $pdo->query($sql);
