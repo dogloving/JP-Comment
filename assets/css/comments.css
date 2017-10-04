@@ -11,7 +11,8 @@
 }
 .jp-comment-top {
     background-color: white;
-    display: block;
+    display: inline-block;
+    padding-right: 3px;
     width: auto;
     height: 60px;
     position: relative;
@@ -38,7 +39,7 @@
     color: lightgray;
 }
 .jp-content {
-    display: inline-block;
+    display: block;
     position: relative;
     top: -35px;
     font-size: 1.7em;
