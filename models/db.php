@@ -55,15 +55,15 @@ EOF;
 	function save($nickname='', $site='', $content='', $origin='', $url='') {
 		// 检查表Site
 //return array(1, $url);
-		$sql = sprintf("SELECT * FROM SITE WHERE URL = '%s'", $url);
+		$sql = sprintf("SELECT NUMBER FROM SITE WHERE URL = '%s'", $url);
 		if(!$db) {
 			$db = new DB();
 		}
 		$site = $db->query($sql);
 		$count = 0;
-		while($row = $site->fetchArray(SQLITE3_ASSOC)) {
-return array(1, $sql);
-			$count++;			
+		while($row = $site->fetchArray()) {
+			$count++;
+			$number = $row[0];
 			$sql = sprintf("UPDATE SITE SET NUMBER = '%d'", $number + 1);
 			$db->query($sql);
 		}
@@ -74,12 +74,12 @@ return array(1, $sql);
 
 		// 检查User
 		$uid = md5($nickname.$site);
-		$sql = sprintf("SELECT * FROM USER WHERE UID = '%s'", $uid);
+		$sql = sprintf("SELECT HEADICON FROM USER WHERE UID = '%s'", $uid);
 		$user = $db->query($sql);
 		$count = 0;
-		while($row = $user->fetchArray(SQLITE3_ASSOC)) {
+		while($row = $user->fetchArray()) {
 			$count++;
-			$headicon = $row['HEADICON'];
+			$headicon = $row[0];
 		}
 		if($count == 0) {
 			$headicons = array('1', '2', '3');
@@ -91,7 +91,7 @@ return array(1, $sql);
 		$sql = sprintf("INSERT INTO COMMENTS VALUES('%s', '%s', '%s', '%s', '%s')", $cid, $url, $uid, $date, $content);
 		$comment = $db->query($sql);
 		$count = 0;
-		while($row = $comment->fetchArray(SQLITE3_ASSOC)) {
+		while($row = $comment->fetchArray()) {
 			return array(1, array('nickname' => $nickname, 'headicon' => $headicon, 'content' => $content));
 		}
 		return array(0);
@@ -110,9 +110,20 @@ return array(1, $sql);
 			}
 			$comment = $db->query($sql);
 			$result = array();
-			while($row = $comment->fetchArray(SQLITE3_ASSOC)) {
-return array(0);
-				$array_push($result, array('nickname' => $row['NICKNAME'], 'headicon' => $row['HEADICON'], 'date' => $row['DATE'], 'content' => $row['CONTENT']));
+			$ret = '';
+			while($row = $comment->fetchArray()) {
+				$ret = $row;
+			}
+			for($i = 0; $i < count($ret);) {
+				$nickname = $ret[$i];
+				$i++;
+				$headicon = $ret[$i];
+				$i++;
+				$date = $ret[$i];
+				$i++;
+				$content = $ret[$i];
+				$i++; 
+				$array_push($result, array('nickname' => $nickname, 'headicon' => $headicon, 'date' => $date, 'content' => $content));
 			}
 			return array(1, $result);
 		} catch(Exception $e) {
