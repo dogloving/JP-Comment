@@ -54,8 +54,9 @@ try {
 	if($count == 0) {
         $headicons = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg',
             '13.jpg', '14.jpg', '15.jpg', 'uh_1.gif', 'uh_2.gif', 'uh_3.gif', 'uh_4.gif', 'uh_5.gif', 'uh_6.gif', 'uh_7.gif', 'uh_8.gif', 'uh_9.gif');
-		$headicon = 'http://120.25.87.171/JP-Comment/assets/img/'.array_rand($headicons, 1);
-		$sql = sprintf("insert into user values('%s', '%s', '%s')", $uid, $nickname, $headicon);
+		$headicon = 'http://120.25.87.171/JP-Comment/assets/img/'.$headicons[array_rand($headicons, 1)];
+        $uid = md5($uid.$date);
+		$sql = sprintf("insert into user values('%s', '%s', '%s', '%s')", $uid, $nickname, $headicon);
         $db->query($sql);
 	}
 	// 检查Comment
@@ -63,7 +64,7 @@ try {
 	$sql = sprintf("insert into comments values('%s', '%s', '%s', '%s', '%s')", $cid, $url, $uid, $date, $content);
 	$comment = $db->query($sql);
 	$count = 0;
-    echo urldecode(json_encode(getInfo(1, array('nickname' => $nickname, 'headicon' => $headicon, 'content' => $content, 'date' => $date))));
+    echo urldecode(json_encode(getInfo(1, array('nickname' => $nickname, 'headicon' => $headicon, 'content' => $content, 'date' => $date, 'site' => $sites))));
 } catch(Exception $e) {
     echo urldecode(json_encode(getInfo(-1, $e->getMessage())));
 }

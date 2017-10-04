@@ -25,7 +25,8 @@
         $headicon = $row['HEADICON'];
         $date = $row['DATE'];
         $content = $row['CONTENT'];
-		array_push($result, array('nickname' => $nickname, 'headicon' => $headicon, 'date' => $date, 'content' => $content));
+        $site = $row['SITE'];
+		array_push($result, array('nickname' => $nickname, 'headicon' => $headicon, 'date' => $date, 'content' => $content, 'site' => $site));
     }
     echo urldecode(json_encode(getInfo(1, $result)));
    } catch(Exception $e) {
