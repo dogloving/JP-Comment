@@ -1,10 +1,14 @@
-<?php 
+<?php
 	header('Access-Control-Allow-Origin: *');
 	function getInfo($flag, $content) {
 		return array('Flag' => $flag, 'Content' => $content);
-	}
-	require('../models/db.php');
-
+    }
+    class DB extends SQLite3 {
+        function __construct() {
+            $this->open('comments.db');
+        }
+    }
+try {
 	/**
 	*	将新评论存入数据库中
 	*	@param nickname string 评论者昵称
@@ -14,16 +18,53 @@
 	*	@param url string 当前评论所属站点的具体url
 	*	@return result int 存储反馈
 	*/
+    $db = new DB();
 	$nickname = $_POST['nickname'];
-	$site = $_POST['site'];
+	$sites = $_POST['site'];
 	$content = $_POST['content'];
 	$origin = $_POST['origin'];
-	$url = $_POST['url'];
-	$result = save($nickname, $site, $content, $origin, $url);
-	if($result[0] > 0) {
-		echo urldecode(json_encode(getInfo(1, $result[1])));
-	} else {
-		echo urldecode(json_encode(getInfo(result[0], '评论失败')));
-	}
+    $url = $_POST['url'];
+    $date = $_POST['date'];
 
+		// 检查表Site
+	$sql = sprintf("select number from site where url = '%s'", $url);
+	$site = $db->query($sql);
+	$count = 0;
+	while($row = $site->fetchArray(SQLITE3_ASSOC)) {
+		$count++;
+		$number = $row['NUMBER'];
+		$sql = sprintf("update site set number = '%d'", $number + 1);
+		$db->query($sql);
+	}
+	if($count == 0) {
+		$number = 1;
+		$sql = sprintf("insert into site values('%s', '%s', '%d')", $url, $origin, $number);
+        $db->query($sql);
+	}
+	// 检查User
+	$uid = md5($nickname.$sites);
+	$sql = sprintf("select headicon from user where uid = '%s'", $uid);
+	$user = $db->query($sql);
+	$count = 0;
+    $headicon = '';
+	while($row = $user->fetchArray(SQLITE3_ASSOC)) {
+		$count++;
+		$headicon = $row['HEADICON'];
+	}
+	if($count == 0) {
+        $headicons = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg',
+            '13.jpg', '14.jpg', '15.jpg', 'uh_1.gif', 'uh_2.gif', 'uh_3.gif', 'uh_4.gif', 'uh_5.gif', 'uh_6.gif', 'uh_7.gif', 'uh_8.gif', 'uh_9.gif');
+		$headicon = 'http://120.25.87.171/JP-Comment/assets/img/'.array_rand($headicons, 1);
+		$sql = sprintf("insert into user values('%s', '%s', '%s')", $uid, $nickname, $headicon);
+        $db->query($sql);
+	}
+	// 检查Comment
+    $cid = md5($date.$uid);
+	$sql = sprintf("insert into comments values('%s', '%s', '%s', '%s', '%s')", $cid, $url, $uid, $date, $content);
+	$comment = $db->query($sql);
+	$count = 0;
+    echo urldecode(json_encode(getInfo(1, array('nickname' => $nickname, 'headicon' => $headicon, 'content' => $content, 'date' => $date))));
+} catch(Exception $e) {
+    echo urldecode(json_encode(getInfo(-1, $e->getMessage())));
+}
  ?>
