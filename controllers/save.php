@@ -56,7 +56,7 @@ try {
             '13.jpg', '14.jpg', '15.jpg', 'uh_1.gif', 'uh_2.gif', 'uh_3.gif', 'uh_4.gif', 'uh_5.gif', 'uh_6.gif', 'uh_7.gif', 'uh_8.gif', 'uh_9.gif');
 		$headicon = 'http://120.25.87.171/JP-Comment/assets/img/'.$headicons[array_rand($headicons, 1)];
         $uid = md5($uid.$date);
-		$sql = sprintf("insert into user values('%s', '%s', '%s', '%s')", $uid, $nickname, $headicon);
+		$sql = sprintf("insert into user values('%s', '%s', '%s', '%s')", $uid, $nickname, $headicon, $sites);
         $db->query($sql);
 	}
 	// 检查Comment
