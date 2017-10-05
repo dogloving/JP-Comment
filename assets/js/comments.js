@@ -12,6 +12,9 @@ function get() {
             url: url
         },
         success: (data) => {
+            $('#jp-nickname').val('')
+            $('#jp-site').val('')
+            $('#jp-content').val('')
             try {
                 console.log('success')
             } catch(e) {
@@ -22,6 +25,7 @@ function get() {
             for(let i = 0; i < data.length; ++i) {
                 ul.appendChild(create(data[i]['headicon'], data[i]['nickname'], data[i]['date'],data[i]['content'], data[i]['site']))
             }
+            document.getElementById('jp-count').innerText = data.length
         },
         error: (data) => {
             console.log('error')
@@ -32,6 +36,9 @@ function get() {
 function save() {
         let nickname = $('#jp-nickname').val()
         let site = $('#jp-site').val()
+        if (site.substring(0, 4) !== 'http') {
+            site = 'http://' + site
+        }
         let content = $('#jp-content').val()
         let newDate = new Date()
         let date = newDate.toLocaleString()
