@@ -2,7 +2,7 @@
     left: 5px;
 }
 .form-control {
-    padding-left: 35px;
+    padding-left: 35px!important;
 }
 .list-group-item {
     display: block;
