@@ -12,9 +12,6 @@ function get() {
             url: url
         },
         success: (data) => {
-            $('#jp-nickname').val('')
-            $('#jp-site').val('')
-            $('#jp-content').val('')
             try {
                 console.log('success')
             } catch(e) {
@@ -34,6 +31,9 @@ function get() {
     })
 }
 function save() {
+        $('#jp-nickname').val('')
+        $('#jp-site').val('')
+        $('#jp-content').val('')
         let nickname = $('#jp-nickname').val()
         let site = $('#jp-site').val()
         if (site.substring(0, 4) !== 'http') {
@@ -45,6 +45,9 @@ function save() {
         console.log('data is ' + date)
         let origin = window.location.origin
         let url = window.location.href
+        if ($nickname.trim() === '' || $content.trim() === '') {
+            return
+        }
         $.ajax({
         url: 'http://120.25.87.171/JP-Comment/controllers/save.php',
         type: 'post',

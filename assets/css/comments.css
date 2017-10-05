@@ -8,6 +8,7 @@
     display: block;
     width: 100%;
     margin-top: 30px;
+    padding-bottom: 0!important;
 }
 .jp-comment-top {
     background-color: white;
@@ -27,14 +28,14 @@
     height: 50px;
 }
 .jp-name {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-left: 5px;
     color: gray;
 }
 .jp-date {
     display: inline;
     line-height: 60px;
-    font-size: 1.3em;
+    font-size: 1em;
     margin-left: 8px;
     color: lightgray;
 }
@@ -42,6 +43,6 @@
     display: block;
     position: relative;
     top: -35px;
-    font-size: 1.7em;
+    font-size: 1.5em;
     padding-left: 45px;
 }
