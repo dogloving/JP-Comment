@@ -44,4 +44,4 @@
 
    ### 效果图
 
-   ![](https://raw.githubusercontent.com/dogloving/JP-Comment/master/assets/img/show.png)
+   ![](https://raw.githubusercontent.com/dogloving/JP-Comment/master/assets/img/show.gif)
