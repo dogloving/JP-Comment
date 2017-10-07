@@ -14,6 +14,7 @@
    ```javascript
    <div class="jp-comments" style="display:block;width:100%;margin-top:30px;">
        <div class="form-horizontal center-class" role="form" style="display:block;width:50%;margin-left:auto;margin-right:auto;">
+           <div class="form-group has-feedback" style="font-size:2em;">评论(共&nbsp;<span id="jp-count"></span>&nbsp;条)</div>
            <div class="form-group has-feedback">
                <div>
                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -43,4 +44,4 @@
 
    ### 效果图
 
-   ![](https://raw.githubusercontent.com/dogloving/JP-Comment/master/assets/img/show.jpg)
+   ![](https://raw.githubusercontent.com/dogloving/JP-Comment/master/assets/img/show.png)
