@@ -41,4 +41,6 @@
    <script type="text/javascript" src="http://120.25.87.171/JP-Comment/assets/js/comments.js"></script>
    ```
 
-   ​
+   ### 效果图
+
+   ![](https://raw.githubusercontent.com/dogloving/JP-Comment/master/assets/img/show.jpg)
