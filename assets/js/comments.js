@@ -2,7 +2,7 @@ let ul = document.getElementById('jp-cm')
 function get() {
         let url = window.location.href
         $.ajax({
-        url: 'http://120.25.87.171/JP-Comment/controllers/get.php',
+        url: 'https://120.25.87.171/JP-Comment/controllers/get.php',
         type: 'post',
         headers: {
             Accept: 'application/json;charset=utf-8'
@@ -37,7 +37,7 @@ function save() {
         let nickname = $('#jp-nickname').val()
         let site = $('#jp-site').val()
         if (site.substring(0, 4) !== 'http') {
-            site = 'http://' + site
+            site = 'https://' + site
         }
         let content = $('#jp-content').val()
         let newDate = new Date()
@@ -49,7 +49,7 @@ function save() {
             return
         }
         $.ajax({
-        url: 'http://120.25.87.171/JP-Comment/controllers/save.php',
+        url: 'https://120.25.87.171/JP-Comment/controllers/save.php',
         type: 'post',
         headers: {
             Accept: 'application/json;charset=utf-8'
