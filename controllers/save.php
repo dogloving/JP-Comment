@@ -54,7 +54,7 @@ try {
 	if($count == 0) {
         $headicons = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg',
             '13.jpg', '14.jpg', '15.jpg', 'uh_1.gif', 'uh_2.gif', 'uh_3.gif', 'uh_4.gif', 'uh_5.gif', 'uh_6.gif', 'uh_7.gif', 'uh_8.gif', 'uh_9.gif');
-		$headicon = 'https://120.25.87.171/JP-Comment/assets/img/'.$headicons[array_rand($headicons, 1)];
+		$headicon = 'https://www.nkuhjp.com/JP-Comment/assets/img/'.$headicons[array_rand($headicons, 1)];
         $uid = md5($uid.$date);
 		$sql = sprintf("insert into user values('%s', '%s', '%s', '%s')", $uid, $nickname, $headicon, $sites);
         $db->query($sql);

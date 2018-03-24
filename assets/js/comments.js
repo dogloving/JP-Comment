@@ -2,7 +2,7 @@ let ul = document.getElementById('jp-cm')
 function get() {
         let url = window.location.href
         $.ajax({
-        url: 'https://120.25.87.171/JP-Comment/controllers/get.php',
+        url: 'https://www.nkuhjp.com/JP-Comment/controllers/get.php',
         type: 'post',
         headers: {
             Accept: 'application/json;charset=utf-8'
@@ -49,7 +49,7 @@ function save() {
             return
         }
         $.ajax({
-        url: 'https://120.25.87.171/JP-Comment/controllers/save.php',
+        url: 'https://www.nkuhjp.com/JP-Comment/controllers/save.php',
         type: 'post',
         headers: {
             Accept: 'application/json;charset=utf-8'
