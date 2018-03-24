@@ -31,9 +31,6 @@ function get() {
     })
 }
 function save() {
-        $('#jp-nickname').val('')
-        $('#jp-site').val('')
-        $('#jp-content').val('')
         let nickname = $('#jp-nickname').val()
         let site = $('#jp-site').val()
         if (site.substring(0, 4) !== 'http') {
@@ -45,10 +42,10 @@ function save() {
         console.log('data is ' + date)
         let origin = window.location.origin
         let url = window.location.href
-        if ($nickname.trim() === '' || $content.trim() === '') {
+        if (nickname.trim() === '' || content.trim() === '') {
             return
         }
-        $.ajax({
+    $.ajax({
         url: 'https://www.nkuhjp.com/JP-Comment/controllers/save.php',
         type: 'post',
         headers: {
@@ -57,11 +54,11 @@ function save() {
         dataType: 'json',
         data: {
             nickname: nickname,
-            site: site,
             content: content,
+            site: site,
             origin: origin,
             url: url,
-            date: date
+            datee: date
         },
         success: (data) => {
             try {
@@ -84,6 +81,9 @@ function save() {
             console.log(data)
         }
     })
+    $('#jp-nickname').val('')
+    $('#jp-site').val('')
+    $('#jp-content').val('')
 }
 function create(headicon='', nickname='', date='', content='', url='') {
     let li = document.createElement('li')

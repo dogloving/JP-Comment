@@ -3,11 +3,6 @@
 	function getInfo($flag, $content) {
 		return array('Flag' => $flag, 'Content' => $content);
     }
-    class DB extends SQLite3 {
-        function __construct() {
-            $this->open('comments.db');
-        }
-    }
 try {
 	/**
 	*	将新评论存入数据库中
@@ -18,21 +13,21 @@ try {
 	*	@param url string 当前评论所属站点的具体url
 	*	@return result int 存储反馈
 	*/
-    $db = new DB();
+    $db = new SQLite3('comments.db');
 	$nickname = $_POST['nickname'];
 	$sites = $_POST['site'];
 	$content = $_POST['content'];
 	$origin = $_POST['origin'];
     $url = $_POST['url'];
-    $date = $_POST['date'];
+    $date = $_POST['datee'];
 
 		// 检查表Site
 	$sql = sprintf("select number from site where url = '%s'", $url);
 	$site = $db->query($sql);
 	$count = 0;
-	while($row = $site->fetchArray(SQLITE3_ASSOC)) {
+	while($row = $site->fetchArray()) {
 		$count++;
-		$number = $row['NUMBER'];
+		$number = $row['number'];
 		$sql = sprintf("update site set number = '%d'", $number + 1);
 		$db->query($sql);
 	}
@@ -47,9 +42,9 @@ try {
 	$user = $db->query($sql);
 	$count = 0;
     $headicon = '';
-	while($row = $user->fetchArray(SQLITE3_ASSOC)) {
+	while($row = $user->fetchArray()) {
 		$count++;
-		$headicon = $row['HEADICON'];
+		$headicon = $row['headicon'];
 	}
 	if($count == 0) {
         $headicons = array('1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg',
@@ -68,4 +63,5 @@ try {
 } catch(Exception $e) {
     echo urldecode(json_encode(getInfo(-1, $e->getMessage())));
 }
+$db->close();
  ?>
