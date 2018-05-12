@@ -3,10 +3,10 @@
 1. 在你的head标签中添加
 
    ```javascript
-       <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
-       <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-       <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-       <link rel="stylesheet" type="text/css" href="https://www.nkuhjp.com/JP-Comment/assets/css/comments.css">
+       <link rel="stylesheet" type="text/css" href="{{ "/css/bootstrap.min.css " | prepend: site.baseurl }}">
+       <script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
+       <script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
+       <link rel="stylesheet" type="text/css" href="https://www.nkuhjp.com/JP-Comment/assets/css/comments.css">       
    ```
 
 2. 在合适的地方添加下面代码，一般是body最下面(用来放评论)
