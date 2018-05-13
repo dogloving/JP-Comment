@@ -3,9 +3,9 @@
 1. 在你的head标签中添加
 
    ```javascript
-       <link rel="stylesheet" type="text/css" href="{{ "/css/bootstrap.min.css " | prepend: site.baseurl }}">
-       <script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
-       <script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
+       <link rel="stylesheet" type="text/css" href="https://www.nkuhjp.com/JP-Comment/assets/css/bootstrap.min.css">
+       <script src="https://www.nkuhjp.com/JP-Comment/assets/js/bootstrap.min.js"></script>
+       <script src="https://www.nkuhjp.com/JP-Comment/assets/js/jquery.min.js"></script>
        <link rel="stylesheet" type="text/css" href="https://www.nkuhjp.com/JP-Comment/assets/css/comments.css">       
    ```
 
